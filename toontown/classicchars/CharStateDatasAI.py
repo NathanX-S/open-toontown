@@ -15,6 +15,7 @@ class CharLonelyStateAI(StateData.StateData):
         StateData.StateData.__init__(self, doneEvent)
         self.__doneEvent = doneEvent
         self.character = character
+        StateData.StateData.load(self)
 
     def enter(self):
         if hasattr(self.character, 'name'):
@@ -40,7 +41,6 @@ class CharLonelyStateAI(StateData.StateData):
 
 class CharChattyStateAI(StateData.StateData):
     notify = DirectNotifyGlobal.directNotify.newCategory('CharChattyStateAI')
-    notify.setDebug(True)
 
     def __init__(self, doneEvent, character):
         StateData.StateData.__init__(self, doneEvent)
@@ -51,6 +51,7 @@ class CharChattyStateAI(StateData.StateData):
         self.nextChatTime = 0
         self.lastMessage = [
          -1, -1]
+        StateData.StateData.load(self)
 
     def enter(self):
         if hasattr(self.character, 'name'):

@@ -3,8 +3,8 @@ from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
 from . import HolidayDecorator
 from toontown.toonbase import ToontownGlobals
-from pandac.PandaModules import Vec4, CSDefault, TransformState, NodePath, TransparencyAttrib
-from libtoontown import loadDNAFile
+from panda3d.core import Vec4, CSDefault, TransformState, NodePath, TransparencyAttrib
+from panda3d.toontown import loadDNAFile
 from toontown.hood import GSHood
 
 class CrashedLeaderBoardDecorator(HolidayDecorator.HolidayDecorator):

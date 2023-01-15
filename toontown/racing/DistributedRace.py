@@ -1,5 +1,5 @@
-from pandac.PandaModules import *
-from libtoontown import *
+from panda3d.core import *
+from panda3d.toontown import *
 from direct.distributed.ClockDelta import *
 from direct.distributed import DistributedObject
 from direct.directnotify import DirectNotifyGlobal
@@ -13,7 +13,7 @@ from .RaceGag import RaceGag
 from toontown.toonbase import ToontownGlobals, TTLocalizer
 from toontown.toon import ToonHeadFrame
 from toontown.racing.KartDNA import InvalidEntry, getAccessory, getDefaultColor
-from pandac.PandaModules import CardMaker, OrthographicLens, LineSegs
+from panda3d.core import CardMaker, OrthographicLens, LineSegs
 from direct.distributed import DistributedSmoothNode
 from math import fmod
 from math import sqrt

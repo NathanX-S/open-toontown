@@ -1,8 +1,8 @@
-from pandac.PandaModules import *
+from panda3d.core import *
 from toontown.toonbase.ToontownGlobals import *
 from direct.task.TaskManagerGlobal import *
 from direct.gui.DirectGui import *
-from pandac.PandaModules import *
+from panda3d.core import *
 from toontown.distributed.ToontownMsgTypes import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.gui import OnscreenText
@@ -24,7 +24,7 @@ from direct.showbase import PythonUtil
 from toontown.toon import NPCToons
 from direct.task import Task
 from toontown.makeatoon.TTPickANamePattern import TTPickANamePattern
-from pandac.PandaModules import TextEncoder
+from panda3d.core import TextEncoder
 MAX_NAME_WIDTH = TTLocalizer.NSmaxNameWidth
 ServerDialogTimeout = 3.0
 
@@ -865,7 +865,7 @@ class NameShop(StateData.StateData):
 
     def checkNamePattern(self):
         self.notify.debug('checkNamePattern')
-        if base.cr.astronSupport:
+        if __astron__:
             base.cr.astronLoginManager.sendSetNamePattern(self.avId,
                                                           self.nameIndices[0], self.nameFlags[0],
                                                           self.nameIndices[1], self.nameFlags[1],
@@ -887,7 +887,7 @@ class NameShop(StateData.StateData):
             messenger.send('nameShopPost', [datagram])
         self.waitForServer()
 
-    if not config.GetBool('astron-support', True):
+    if not __astron__:
         def handleSetNamePatternAnswerMsg(self, di):
             self.notify.debug('handleSetNamePatternAnswerMsg')
             self.cleanupWaitForServer()
@@ -953,14 +953,14 @@ class NameShop(StateData.StateData):
         self.notify.debug('checkNameTyped')
         if self._submitTypeANameAsPickAName():
             return
-        if not base.cr.astronSupport:
+        if not __astron__:
             datagram = PyDatagram()
             datagram.addUint16(CLIENT_SET_WISHNAME)
         if justCheck:
             avId = 0
         else:
             avId = self.avId
-        if not base.cr.astronSupport:
+        if not __astron__:
             datagram.addUint32(avId)
             datagram.addString(self.nameEntry.get())
             messenger.send('nameShopPost', [datagram])
@@ -968,7 +968,7 @@ class NameShop(StateData.StateData):
             base.cr.astronLoginManager.sendSetNameTyped(avId, self.nameEntry.get(), self.handleSetNameTypedAnswerMsg)
         self.waitForServer()
 
-    if not config.GetBool('astron-support', True):
+    if not __astron__:
         def handleSetNameTypedAnswerMsg(self, di):
             self.notify.debug('handleSetNameTypedAnswerMsg')
             self.cleanupWaitForServer()
@@ -1082,14 +1082,14 @@ class NameShop(StateData.StateData):
             self.requestingSkipTutorial = False
         if not self.avExists or self.avExists and self.avId == 'deleteMe':
             messenger.send('nameShopCreateAvatar', [style, '', self.index])
-            if base.cr.astronSupport:
+            if __astron__:
                 self.accept('nameShopCreateAvatarDone', self.handleCreateAvatarResponseMsg)
         else:
             self.checkNameTyped()
         self.notify.debug('Ending Make A Toon: %s' % self.toon.style)
         base.cr.centralLogger.writeClientEvent('MAT - endingMakeAToon: %s' % self.toon.style)
 
-    if not config.GetBool('astron-support', True):
+    if not __astron__:
         def handleCreateAvatarResponseMsg(self, di):
             self.notify.debug('handleCreateAvatarResponseMsg')
             echoContext = di.getUint16()

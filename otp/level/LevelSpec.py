@@ -1,4 +1,4 @@
-from pandac import PandaModules as PM
+from panda3d.core import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.PythonUtil import list2dict, uniqueElements
 import string
@@ -92,7 +92,7 @@ class LevelSpec:
 
     def getCopyOfSpec(self, spec):
         specCopy = {}
-        if not isClient():
+        if not __debug__ or __execWarnings__:
             print('EXECWARNING LevelSpec exec: %s' % self.getSpecImportsModuleName())
             printStack()
         exec('from %s import *' % self.getSpecImportsModuleName())
@@ -409,7 +409,7 @@ class LevelSpec:
             return
 
         def stringHash(self):
-            h = PM.HashVal()
+            h = HashVal()
             h.hashString(repr(self))
             return h.asHex()
 
