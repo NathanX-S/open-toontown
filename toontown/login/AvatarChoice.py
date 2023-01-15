@@ -30,8 +30,8 @@ class AvatarChoice(DirectButton):
     MODE_CHOOSE = 1
     MODE_LOCKED = 2
 
-    def __init__(self, av = None, position = 0, paid = 0, okToLockout = 1):
-        DirectButton.__init__(self, relief=None, text='', text_font=ToontownGlobals.getSignFont())
+    def __init__(self, parent = None, av = None, position = 0, paid = 0, okToLockout = 1):
+        DirectButton.__init__(self, relief=None, text='', text_font=ToontownGlobals.getSignFont(), parent=parent)
         self.initialiseoptions(AvatarChoice)
         self.hasPaid = paid
         self.mode = None

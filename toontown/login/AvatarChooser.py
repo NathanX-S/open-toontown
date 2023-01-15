@@ -51,11 +51,11 @@ class AvatarChooser(StateData.StateData):
         if self.isLoaded == 0:
             self.load()
         base.disableMouse()
-        self.title.reparentTo(aspect2d)
+        self.title.reparentTo(self.pickAToonBG)
         self.quitButton.show()
         if base.cr.loginInterface.supportsRelogin():
             self.logoutButton.show()
-        self.pickAToonBG.reparentTo(base.camera)
+        self.pickAToonBG.reparentTo(aspect2d)
         choice = base.config.GetInt('auto-avatar-choice', -1)
         for panel in self.panelList:
             panel.show()
@@ -89,8 +89,8 @@ class AvatarChooser(StateData.StateData):
         self.pickAToonBG.setScale(1, 1, 1)
         self.title = OnscreenText(TTLocalizer.AvatarChooserPickAToon, scale=TTLocalizer.ACtitle, parent=hidden, font=ToontownGlobals.getSignFont(), fg=(1, 0.9, 0.1, 1), pos=(0.0, 0.82))
         quitHover = gui.find('**/QuitBtn_RLVR')
-        self.quitButton = DirectButton(image=(quitHover, quitHover, quitHover), relief=None, text=TTLocalizer.AvatarChooserQuit, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=TTLocalizer.ACquitButton, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, pos=(1.08, 0, -0.907), command=self.__handleQuit)
-        self.logoutButton = DirectButton(relief=None, image=(quitHover, quitHover, quitHover), text=TTLocalizer.OptionsPageLogout, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_scale=TTLocalizer.AClogoutButton, text_pos=(0, -0.035), pos=(-1.17, 0, -0.914), image_scale=1.15, image1_scale=1.15, image2_scale=1.18, scale=0.5, command=self.__handleLogoutWithoutConfirm)
+        self.quitButton = DirectButton(parent=self.pickAToonBG, image=(quitHover, quitHover, quitHover), relief=None, text=TTLocalizer.AvatarChooserQuit, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_pos=TTLocalizer.ACquitButtonPos, text_scale=TTLocalizer.ACquitButton, image_scale=1, image1_scale=1.05, image2_scale=1.05, scale=1.05, pos=(1.08, 0, -0.907), command=self.__handleQuit)
+        self.logoutButton = DirectButton(parent=self.pickAToonBG, relief=None, image=(quitHover, quitHover, quitHover), text=TTLocalizer.OptionsPageLogout, text_font=ToontownGlobals.getSignFont(), text_fg=(0.977, 0.816, 0.133, 1), text_scale=TTLocalizer.AClogoutButton, text_pos=(0, -0.035), pos=(-1.17, 0, -0.914), image_scale=1.15, image1_scale=1.15, image2_scale=1.18, scale=0.5, command=self.__handleLogoutWithoutConfirm)
         self.logoutButton.hide()
         gui.removeNode()
         gui2.removeNode()
@@ -104,14 +104,14 @@ class AvatarChooser(StateData.StateData):
                 okToLockout = 1
                 if av.position in AvatarChoice.AvatarChoice.OLD_TRIALER_OPEN_POS:
                     okToLockout = 0
-            panel = AvatarChoice.AvatarChoice(av, position=av.position, paid=isPaid, okToLockout=okToLockout)
+            panel = AvatarChoice.AvatarChoice(parent=self.pickAToonBG, av=av, position=av.position, paid=isPaid, okToLockout=okToLockout)
             panel.setPos(POSITIONS[av.position])
             used_position_indexs.append(av.position)
             self.panelList.append(panel)
 
         for panelNum in range(0, MAX_AVATARS):
             if panelNum not in used_position_indexs:
-                panel = AvatarChoice.AvatarChoice(position=panelNum, paid=isPaid)
+                panel = AvatarChoice.AvatarChoice(parent=self.pickAToonBG, position=panelNum, paid=isPaid)
                 panel.setPos(POSITIONS[panelNum])
                 self.panelList.append(panel)
 
