@@ -32,7 +32,14 @@ class ToontownChatManager(ChatManager.ChatManager):
 
     def __init__(self, cr, localAvatar):
         gui = loader.loadModel('phase_3.5/models/gui/chat_input_gui')
-        self.normalButton = DirectButton(image=(gui.find('**/ChtBx_ChtBtn_UP'), gui.find('**/ChtBx_ChtBtn_DN'), gui.find('**/ChtBx_ChtBtn_RLVR')), pos=(0.09, 0, -0.07), scale=1.179, parent=base.a2dTopLeft, relief=None, image_color=Vec4(1, 1, 1, 1), text=('', OTPLocalizer.ChatManagerChat, OTPLocalizer.ChatManagerChat), text_align=TextNode.ALeft, text_scale=TTLocalizer.TCMnormalButton, text_fg=Vec4(1, 1, 1, 1), text_shadow=Vec4(0, 0, 0, 1), text_pos=(-0.0525, -0.09), textMayChange=0, sortOrder=DGG.FOREGROUND_SORT_INDEX, command=self.__normalButtonPressed)
+        self.normalButton = DirectButton(image=(gui.find('**/ChtBx_ChtBtn_UP'), gui.find('**/ChtBx_ChtBtn_DN'), gui.find('**/ChtBx_ChtBtn_RLVR')), 
+        pos=(0.09, 0, -0.07), scale=1.179, 
+        parent=base.a2dTopLeft, relief=None, 
+        image_color=Vec4(1, 1, 1, 1), text=('', OTPLocalizer.ChatManagerChat, OTPLocalizer.ChatManagerChat), 
+        text_align=TextNode.ALeft, text_scale=TTLocalizer.TCMnormalButton, 
+        text_fg=Vec4(1, 1, 1, 1), text_shadow=Vec4(0, 0, 0, 1), 
+        text_pos=(-0.0525, -0.09), textMayChange=0, 
+        sortOrder=DGG.FOREGROUND_SORT_INDEX, command=self.__normalButtonPressed)
         self.normalButton.hide()
         self.openScSfx = loader.loadSfx('phase_3.5/audio/sfx/GUI_quicktalker.ogg')
         self.openScSfx.setVolume(0.6)
@@ -53,10 +60,10 @@ class ToontownChatManager(ChatManager.ChatManager):
         ChatManager.ChatManager.__init__(self, cr, localAvatar)
         self.defaultToWhiteList = base.config.GetBool('white-list-is-default', 1)
         self.chatInputSpeedChat = TTChatInputSpeedChat(self)
-        self.normalPos = Vec3(-1.083, 0, 0.804)
+        self.normalPos = Vec3(0.26, 0, -0.2)
         self.whisperPos = Vec3(0.0, 0, 0.71)
         self.speedChatPlusPos = Vec3(-0.35, 0, 0.71)
-        self.chatInputWhiteList = TTChatInputWhiteList()
+        self.chatInputWhiteList = TTChatInputWhiteList(parent=base.a2dTopLeft)
         if self.defaultToWhiteList:
             self.chatInputNormal = self.chatInputWhiteList
             self.chatInputNormal.setPos(self.normalPos)

@@ -152,7 +152,7 @@ class ToonBase(OTPBase.OTPBase):
         return
 
     def __aspectRatioChanged(self):
-        print("PANIC!!!", self.aspectRatio)
+        return
 
     def windowEvent(self, win):
         OTPBase.OTPBase.windowEvent(self, win)
