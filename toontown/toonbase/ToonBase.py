@@ -146,30 +146,15 @@ class ToonBase(OTPBase.OTPBase):
         self.oldX = max(1, base.win.getXSize())
         self.oldY = max(1, base.win.getYSize())
         self.aspectRatio = float(self.oldX) / self.oldY
-        #self.camLens.setMinFov(ToontownGlobals.DefaultCameraFov / (4 / 3))
+        self.camLens.setMinFov(ToontownGlobals.DefaultCameraFov / (4 / 3))
         self.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, ToontownGlobals.DefaultCameraFar)
         self.accept('aspectRatioChanged', self.__aspectRatioChanged)
         return
 
     def __aspectRatioChanged(self):
-        #self.aspectRatio = max(1, base.win.getXSize()) / max(1, base.win.getYSize())
-        #self.camLens.setFilmSize(base.win.getXSize(), base.win.getYSize())
-        #self.camLens.setMinFov(ToontownGlobals.DefaultCameraFov / (4 / 3))
-        mm = self.marginManager
-        self.leftCells = [mm.addGridCell(0, 1, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop), mm.addGridCell(0, 2, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop), mm.addGridCell(0, 3, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
-        self.bottomCells = [mm.addGridCell(0.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(1.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(2.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(3.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(4.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
-        self.rightCells = [mm.addGridCell(5, 2, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop), mm.addGridCell(5, 1, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
-        print(self.camLens.getFilmSize())
-        print(self.camLens.getAspectRatio())
-        print(base.a2dLeft)
         print("PANIC!!!", self.aspectRatio)
 
     def windowEvent(self, win):
-        #print("PANIC")
         OTPBase.OTPBase.windowEvent(self, win)
         if not ConfigVariableInt('keep-aspect-ratio', 0).value:
             return
@@ -293,13 +278,18 @@ class ToonBase(OTPBase.OTPBase):
         self.marginManager = MarginManager()
         self.margins = self.aspect2d.attachNewNode(self.marginManager, DirectGuiGlobals.MIDGROUND_SORT_INDEX + 1)
         mm = self.marginManager
-        self.leftCells = [mm.addGridCell(0, 1, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop), mm.addGridCell(0, 2, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop), mm.addGridCell(0, 3, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
-        self.bottomCells = [mm.addGridCell(0.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(1.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(2.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(3.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-         mm.addGridCell(4.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
-        self.rightCells = [mm.addGridCell(5, 2, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop), mm.addGridCell(5, 1, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
+        sideMarginX = 0.222222
+        bottomMarginY = 0.166667
+        self.leftCells = [mm.addGridCell(0, 1, base.a2dTopLeft, (sideMarginX, 0, -1.5)), 
+        mm.addGridCell(0, 2, base.a2dTopLeft, (sideMarginX, 0, -1.16667)), 
+        mm.addGridCell(0, 3, base.a2dTopLeft, (sideMarginX, 0, -0.833333))]
+        self.bottomCells = [mm.addGridCell(0.5, 0, base.a2dBottomCenter, (-0.888889, 0, bottomMarginY)),
+         mm.addGridCell(1.5, 0, base.a2dBottomCenter, (-0.444444, 0, bottomMarginY)),
+         mm.addGridCell(2.5, 0, base.a2dBottomCenter, (0, 0, bottomMarginY)),
+         mm.addGridCell(3.5, 0, base.a2dBottomCenter, (0.444444, 0, bottomMarginY)),
+         mm.addGridCell(4.5, 0, base.a2dBottomCenter, (0.888889, 0, bottomMarginY))]
+        self.rightCells = [mm.addGridCell(5, 2, base.a2dTopRight, (-sideMarginX, 0, -1.16667)), 
+        mm.addGridCell(5, 1, base.a2dTopRight, (-sideMarginX, 0, -1.5))]
 
     def setCellsAvailable(self, cell_list, available):
         for cell in cell_list:
