@@ -146,7 +146,7 @@ class ToonBase(OTPBase.OTPBase):
         self.oldX = max(1, base.win.getXSize())
         self.oldY = max(1, base.win.getYSize())
         self.aspectRatio = float(self.oldX) / self.oldY
-        self.camLens.setMinFov(ToontownGlobals.DefaultCameraFov / (4 / 3))
+        self.setFov(ToontownGlobals.DefaultCameraFov)
         self.camLens.setNearFar(ToontownGlobals.DefaultCameraNear, ToontownGlobals.DefaultCameraFar)
         self.accept('aspectRatioChanged', self.__aspectRatioChanged)
         return
@@ -405,3 +405,6 @@ class ToonBase(OTPBase.OTPBase):
 
     def playMusic(self, music, looping = 0, interrupt = 1, volume = None, time = 0.0):
         OTPBase.OTPBase.playMusic(self, music, looping, interrupt, volume, time)
+
+    def setFov(self, fov):
+        self.camLens.setMinFov(fov / (4 / 3))

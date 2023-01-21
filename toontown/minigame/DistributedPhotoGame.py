@@ -627,7 +627,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             hMove = hMDegree * (1.0 - ZOOMRATIO)
             vMove = vMDegree * (1.0 - ZOOMRATIO)
             self.currentFov = self.zoomFov
-            base.camLens.setFov(self.zoomFov)
+            base.setFov(self.zoomFov)
             self.blackoutNode.show()
             self.swivel.setHpr(self.swivel, hMove * -self.zoomFlip, vMove * self.zoomFlip, 0)
         else:
@@ -635,7 +635,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             hMove = hMDegree * ((1.0 - ZOOMRATIO) / ZOOMRATIO)
             vMove = vMDegree * ((1.0 - ZOOMRATIO) / ZOOMRATIO)
             self.currentFov = self.outFov
-            base.camLens.setFov(self.outFov)
+            base.setFov(self.outFov)
             self.blackoutNode.hide()
             self.swivel.setHpr(self.swivel, hMove * self.zoomFlip, vMove * -self.zoomFlip, 0)
 
@@ -664,7 +664,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             hMove = hMDegree * (1.0 - ZOOMRATIO)
             vMove = vMDegree * (1.0 - ZOOMRATIO)
             self.currentFov = self.zoomFov
-            base.camLens.setFov(self.zoomFov)
+            base.setFov(self.zoomFov)
             self.blackoutNode.show()
             orgQuat = self.swivel.getQuat()
             self.swivel.setHpr(self.swivel, hMove * -self.zoomFlip, vMove * self.zoomFlip, 0)
@@ -673,7 +673,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             self.swivel.setQuat(orgQuat)
             zoomTrack = Parallel()
             zoomTrack.append(LerpQuatInterval(self.swivel, ZOOMTIME, newQuat))
-            zoomTrack.append(LerpFunc(base.camLens.setFov, fromData=self.outFov, toData=self.zoomFov, duration=ZOOMTIME))
+            zoomTrack.append(LerpFunc(base.setFov, fromData=self.outFov, toData=self.zoomFov, duration=ZOOMTIME))
             zoomTrack.append(LerpFunc(self.setBlackout, fromData=0.0, toData=0.5, duration=ZOOMTIME))
             self.cameraTrack.append(zoomTrack)
             self.cameraTrack.append(Func(self.finishZoom, 1))
@@ -682,7 +682,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             hMove = hMDegree * ((1.0 - ZOOMRATIO) / ZOOMRATIO)
             vMove = vMDegree * ((1.0 - ZOOMRATIO) / ZOOMRATIO)
             self.currentFov = self.outFov
-            base.camLens.setFov(self.outFov)
+            base.setFov(self.outFov)
             orgQuat = self.swivel.getQuat()
             self.swivel.setHpr(self.swivel, hMove * self.zoomFlip, vMove * -self.zoomFlip, 0)
             self.swivel.setR(0.0)
@@ -690,7 +690,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             self.swivel.setQuat(orgQuat)
             zoomTrack = Parallel()
             zoomTrack.append(LerpQuatInterval(self.swivel, ZOOMTIME, newQuat))
-            zoomTrack.append(LerpFunc(base.camLens.setFov, fromData=self.zoomFov, toData=self.outFov, duration=ZOOMTIME))
+            zoomTrack.append(LerpFunc(base.setFov, fromData=self.zoomFov, toData=self.outFov, duration=ZOOMTIME))
             zoomTrack.append(LerpFunc(self.setBlackout, fromData=0.5, toData=0.0, duration=ZOOMTIME))
             self.cameraTrack.append(zoomTrack)
             self.cameraTrack.append(Func(self.blackoutNode.hide))

@@ -110,11 +110,8 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
 
         camTrack = Sequence()
 
-        def setCamFov(fov):
-            base.camLens.setFov(fov)
-
         camTrack.append(Func(camera.wrtReparentTo, suitLeader))
-        camTrack.append(Func(setCamFov, self.camFOFov))
+        camTrack.append(Func(base.setFov, self.camFOFov))
         suitHeight = suitLeader.getHeight()
         suitOffsetPnt = Point3(0, 0, suitHeight)
         MidTauntCamHeight = suitHeight * 0.66
@@ -157,7 +154,7 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
         self.clearInterval(self.faceOffName)
         self._removeMembersKeep()
         camera.wrtReparentTo(self)
-        base.camLens.setFov(self.camFov)
+        base.setFov(self.camFov)
         return None
 
     def __playReward(self, ts, callback):
